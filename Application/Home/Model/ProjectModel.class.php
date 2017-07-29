@@ -10,7 +10,7 @@ class ProjectModel extends RelationModel{
             'mapping_name'=> 'community',
             'foreign_key' => 'community_id'
         )
-    )
+    );
     protected $pk = 'project_id';
 
     //创建项目
@@ -35,7 +35,7 @@ class ProjectModel extends RelationModel{
         if ($result)
             return true;
         return false;
-    }
+    }  
 
 }
 ?>
