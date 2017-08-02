@@ -36,6 +36,7 @@ class Local{
      * @return boolean true-检测通过，false-检测失败
      */
     public function checkRootPath($rootpath){
+        $this->mkdir($rootpath);
         if(!(is_dir($rootpath) && is_writable($rootpath))){
             $this->error = '上传根目录不存在！请尝试手动创建:'.$rootpath;
             return false;
