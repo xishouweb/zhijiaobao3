@@ -153,10 +153,7 @@ function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true) {
     }
     return $suffix ? $slice.'...' : $slice;
 }
-function test() {
-    echo C('ALI_APPKEY');
-    echo C('ALI_SIGNNAME');
-}
+
 /**
  * 验证短信发送
  * @param string $code
