@@ -15,4 +15,15 @@ return array(
     'DB_PWD'=>'dsdadc666',
     'DB_PORT'=>3306,
     'DB_PREFIX'=>'t_',
+
+
+    //以下为支教宝自定义配置
+
+    // 短信接口配置
+    'ALI_APPKEY'       => '23696538',
+    'ALI_SECRETKEY'    => 'e02249a67711ef2ecf5befde5a4e5955',
+    'ALI_SMSTYPE'      => 'normal',
+    'ALI_SIGNNAME'     => '支教宝',
+    'ALI_TEMPLATECODE' => 'SMS_55610001'
+
 );
