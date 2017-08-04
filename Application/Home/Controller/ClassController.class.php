@@ -566,7 +566,7 @@ class ClassController extends Controller {
         //$this->success('result'); //$this->error('reason');
    }
 
- //获得该老师当天上课的课程
+   //获得该老师当天上课的课程
    public function getTeacherClass(){
          //(1)获取变量
         $data['volunteer_id'] = I('get.volunteer_id');
@@ -887,6 +887,7 @@ class ClassController extends Controller {
         return $result;
     
     }
+
     //判断该班级是否有学生
     public function hadStu($classId){
         $result = D('studentclass')->getStudent($classId);
@@ -899,11 +900,13 @@ class ClassController extends Controller {
         }
         
     }
+
     //获取该班级的所有志愿者
     public function allvolunInClass($classId){
         $result = D('classcourse')->allVolunInClass($classId);
         return $result;
     }
+
     //获取该项目的特定地点的编号
     public function getLocationId(projectId){
         $project = D("project")->getProject($projectId);
@@ -920,6 +923,7 @@ class ClassController extends Controller {
         return $locationId;
 
     }
+    
     //获取当天该地点创建学生需要的编号
     public function getStuInToday($locationId){
         $result = D('student')->getTodaystu($locationId);
