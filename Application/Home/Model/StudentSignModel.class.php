@@ -24,7 +24,7 @@ class StudentSignModel extends RelationModel{
 	public function signinStu($time,$classId,$teachplanId){
 		$map['teachplan_id'] = $teachplanId;
 		$map['signin_time'] = $time;
-		$result1 = D('signin')->where($map)->field('student_id')->select();
+		$result1 = $this->where($map)->field('student_id')->select();
 		$allStu = D('studentclass')->getStudent($classId);//班上所有学生
 		for($i=0;$i<count($allStu);$i++){
 			$result2[$i]['student_id'] = $allStu[$i]['student_id'];

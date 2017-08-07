@@ -41,7 +41,7 @@ class StudentModel extends RelationModel{
     }
 	//获取学生列表，选择学生添加到班级中
 	public function studentList(){
-		$result = $this->query("select student_id,student_name,student_sex,birthday,address from t_student   
+		$result = $this->query("select student_id,grade,student_name,student_sex,birthday,address from t_student   
 		where not exists(select student_id from t_studentclass  where t_student.student_id = t_studentclass.student_id )");
 		for($i=0;$i<count($result);$i++){
 			$studentId['student_id'] = $result[$i]['student_id'];
@@ -50,38 +50,44 @@ class StudentModel extends RelationModel{
 		return $result;
 	}
 	//获取某个项目可以添加到该班级的学生
-	public function stuInproject($projectId){
-		$location = D('project')->getOneProject($projectId);
+	public function allStuOffClass($projectId){
+		$location = D('project')->getProject($projectId);
 		$locationId = $location['location_id'];
-		if($locationId > 9&&$locationId<100){
+		if($locationId > 9 && $locationId < 100){
 			$locationId = '0'.$locationId;
 			}elseif($locationId < 10){
 					$locationId = '00'.$locationId;
 				}
-	    
-		$result = $this->studentList();
+		$result = $this->query("select student_id,grade,student_name,student_sex,birthday,address from t_student   
+		where not exists(select student_id from t_studentclass  where t_student.student_id = t_studentclass.student_id )");
 		$k = 0;
 		$student = array();
 		for($i=0;$i<count($result);$i++){
 			$studentId = $result[$i]['student_id'];
 			if(substr($studentId,8,3)==$locationId){
 				$map['student_id'] = $studentId;
-				$class = D('studentclass')->where($map)->order('add_time desc')->select();
+				$class = D('studentclass')->where($map)->order('time desc')->select();
 				$projectId = substr($class[0]['class_id'],0,11);
-				$project   = D('project')->getName($projectId);
 				$student[$k]['student_id'] = $studentId;
 				$student[$k]['student_name'] = $result[$i]['student_name'];
 				$student[$k]['student_sex'] = $result[$i]['student_sex'];
 				$student[$k]['birthday'] = $result[$i]['birthday'];
 				$student[$k]['address'] = $result[$i]['address'];
-				$student[$k]['project'] = $result[$i]['project_name'];
-				
+				$student[$k]['grade'] = $result[$i]['grade'];
 				$k++;
 			}
 		}
 		//var_dump($student);
 		return $student;
 		
+	}
+	//获取今天添加的学生的数目
+	public function getTodaystu($locationId){
+		$time = date('Y-m-d');
+		$time1 = explode("-",$time);
+		$where['student_id'] = array('like',$time1[0].$time1[1].$time1[2].$locationId.'%');
+		$result = D('student')->where($where)->select();
+		return $result;
 	}
    
 }

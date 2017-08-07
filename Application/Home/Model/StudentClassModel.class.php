@@ -5,11 +5,12 @@ class StudentClassModel extends RelationModel{
     //学生班级表model
 		protected $_link = array(
 		'student' => array(                          
-            'mapping_type' => self::BELONGS_TO,  
-            'foreign_key'  => 'student_id',
-			'mapping_fields'=> 'student_id,student_name,student_sex,address',
+            'mapping_type'   => self::BELONGS_TO,  
+            'foreign_key'    => 'student_id',
+			'mapping_fields' => 'student_id,student_name,father_phone,student_sex,address',
         ),
 	);	
+	
 	//获取某一班级下的所有学生
 	public function getStudent($classId){
 		if (empty($classId)){
@@ -27,6 +28,20 @@ class StudentClassModel extends RelationModel{
 		$project = D('class')->field('project_id')->find($classId);
 		$projectName = D('project')->getName($project);
 		return $projectName['project_name'];
+
+	//删除该班级下的某一个学生
+	public function deleteStudent($data){
+		if($data['student_id']!=null && $data['class_id']!=null){
+			$result = $this->where($data)->delete();
+		}else{
+			$list = $this->where($data)->select();
+			foreach($list as $v){
+				$where['student_id'] = $v['student_id'];
+				$where['class_id'] = $v['class_id'];
+				$result = $this->where($where)->delete();
+			}
+		}
+		return $result;
 	}
 	
 	//为某班级添加学生

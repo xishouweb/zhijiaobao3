@@ -9,6 +9,25 @@ class ScheduleModel extends RelationModel{
         $result = $this->where($map)->find();
         return $result;
     }
+    //获取该项目一天上几节课
+    public function classNumber($projectId){
+        $schedule = D('schedule')->getSchedule($projectId);
+		if($schedule['fourth']!=null && $schedule['fifth']==null){
+			return 4;
+		}else if($schedule['fifth']!=null && $schedule['sixth']==null){
+			return 5;
+		}else if($schedule['sixth']!=null && $schedule['seventh']==null){
+			return 6;
+		}else if($schedule['seventh']!=null && $schedule['eighth']==null){
+			return 7;
+		}else if($schedule['eighth']!=null && $schedule['ninth']==null){
+			return 8;
+		}else if($schedule['ninth']!=null && $schedule['tenth']==null){
+			return 9;
+		}else if($schedule['ninth']!=null && $schedule['tenth']!=null){
+			return 10;
+		}
+    }
     //创建或更新项目的作息时间表,成功返回项目编号，失败返回false
     public function createSchedule(array $data){
         if (empty($data)){
