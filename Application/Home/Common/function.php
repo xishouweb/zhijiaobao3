@@ -184,4 +184,12 @@ function sendMsg($code,$phone){
     }
 }
 
+    /**
+     * 查询字符校验，并过滤
+     */
+    function tranSql($get) {
+        $pattern = '#select|insert|update|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile|or|and|-|<|>|&|%|limit|where|oR|aNd#';
+        $result  = preg_replace($pattern, '',$get);//要匹配的字符
+        return $result;
+    }
 ?>
