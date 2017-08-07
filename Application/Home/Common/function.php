@@ -81,7 +81,7 @@ function sendMail($to,$subject,$message){
  * 下载个人信息到excel表格中
  * @param 未完待续
  */
-function downloadXls(){
+function downloadXls($where){
     import('Vendor.PHPExcel.PHPExcel');
     $phpexcel = new \PHPExcel();  
     $objWriter = \PHPExcel_IOFactory::createWriter($phpexcel, 'Excel2007');
