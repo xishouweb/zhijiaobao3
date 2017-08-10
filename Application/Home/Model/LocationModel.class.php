@@ -22,9 +22,11 @@ class LocationModel extends RelationModel{
     }
 
     //获取地点详细信息
-    public function getLocation($locationId) {
+    public function getLocation($locationId,$userId=NULL) {
         $map['location_id'] = $locationId;
-        $location = $this->where($map)->select();
+        if ($userId != NULL)
+            $map['community_id'] = $userId;
+        $location = $this->where($map)->find();
         return $location;
     }
 
@@ -37,8 +39,8 @@ class LocationModel extends RelationModel{
     public function lock($locationId,$status) {
         $map['location_id'] = $locationId;
         $map['is_free']     = $status;
-        if ($this->where($map)->find())
-            return true;
+        if (!$this->where($map)->find())
+            return false;
         $data['is_free'] = $status;
         unset($map['is_free']);
         return $this->where($map)->data($data)->save();
